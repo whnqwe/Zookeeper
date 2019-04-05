@@ -23,6 +23,10 @@
 ###### 实时性
 
 > 一旦一个事务被成功应用，客户端就能够立即从服务器端读取到事务变更后的最新数据状态；（zookeeper仅仅保证在一定时间内，近实时）
+>
+> ###### 单一视图
+>
+> 无论客户端连接到那台服务器，所有的模型都是一样的
 
 #### zookeeper安装
 
@@ -250,103 +254,8 @@ numChildren = 0
 
 > 子节点数
 
-#### spi使用
-
-##### java api的使用
-
-###### 导包
-
-```xml
-<dependency>
-
-<groupId>org.apache.zookeeper</groupId>
-
-<artifactId>zookeeper</artifactId>
-
-<version>3.4.8</version>
-
-</dependency>
-
-```
-
-##### zkclient
-
-###### 导包
-
-```xml
- <dependency>
-    <groupId>com.101tec</groupId>
-    <artifactId>zkclient</artifactId>
-    <version>0.11</version>
-</dependency>
-```
-
-##### curator
-
-> Curator本身是Netflix公司开源的zookeeper客户端；
->
-> curator提供了各种应用场景的实现封装
->
-> curator-framework 提供了fluent风格api
->
-> curator-replice 提供了实现封装
-
-###### 导包
-
-```xml
-<dependency>
-    <groupId>org.apache.curator</groupId>
-    <artifactId>curator-framework</artifactId>
-    <version>4.2.0</version>
-</dependency>
-```
-
-```xml
-<dependency>
-    <groupId>org.apache.curator</groupId>
-    <artifactId>curator-recipes</artifactId>
-    <version>4.2.0</version>
-</dependency>
-```
-
-###### curator连接的重试策略
-
-> ExponentialBackoffRetry()衰减重试
-
-> RetryNTimes 指定最大重试次数
-
-> RetryOneTime 仅重试一次
-
-> RetryUnitilElapsed一直重试知道规定的时间
 
 
+#### zk的总结
 
-##### zookeeper能做什么
-
-###### 数据的发布/订阅
-
-> 统一配置管理（disconf）
-
-###### 负载均衡
-
-> dubbo利用了zookeeper机制实现负载均衡
-
-###### 命名服务
-
-###### master选举
-
-> kafka
-
-###### 分布式队列
-
-###### 分布式锁
-
-redis
-
-zookeeper
-
-数据库
-
-###### ID生成器
-
-##### 
+zk虽然能存储key-value的数据，但是zk主要不是用来存储数据的，zk存储的是一些标识性的数据和数据量小的数据，利用zk的特性（顺序一致性，原子性，可靠性，单一视图。实时性）监控数据状态变化，达到基于数据集群管理（发布订阅，负载均衡，master选举，分布式锁，分布式队列等）的目的
